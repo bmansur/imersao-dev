@@ -1,25 +1,41 @@
-class Personagem {
-  constructor(imagem) {
-    this.imagem = imagem;
-    this.tamX = 220;
-    this.tamY = 270;
-    this.quantidadeLinhas = 4;
-    this.quantidadeColunas = 4;
-    this.frameAtual = 0;
+class Personagem extends Animacao {
+  constructor(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite) {
+    super(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite);
+
+    this.yInicial = height - this.altura;
+
+    this.velocidadeDoPulo = 0;
+    this.gravidade = 5;
   }
-  
-  exibe() {
-    let x = this.frameAtual % this.quantidadeColunas * this.tamX;
-    let y = Math.floor(this.frameAtual / this.quantidadeLinhas) * this.tamY;
-    
-    image(this.imagem, 0, height - 135, 110, 135, x, y, this.tamX, this.tamY);
+
+  pula() {
+    this.velocidadeDoPulo = -30;
   }
-  
-  anima() {
-    this.frameAtual ++;
-    
-    if(this.frameAtual >= this.quantidadeColunas * this.quantidadeLinhas){
-      this.frameAtual = 0;
+
+  aplicaGravidade() {
+    this.y = this.y + this.velocidadeDoPulo;
+    this.velocidadeDoPulo = this.velocidadeDoPulo + this.gravidade;
+
+    if (this.y > this.yInicial) {
+      this.y = this.yInicial;
     }
   }
+
+  estaColidindo(inimigo) {
+    const precisao = .7;
+
+    const colidiu = collideRectRect(
+      this.x,
+      this.y,
+      this.largura * precisao,
+      this.altura * precisao,
+      inimigo.x,
+      inimigo.y,
+      inimigo.largura * precisao,
+      inimigo.altura * precisao
+    );
+
+    return colidiu;
+  }
+
 }
