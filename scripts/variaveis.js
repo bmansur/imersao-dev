@@ -5,6 +5,7 @@ let imagemPersonagem;
 let imagemInimigo;
 let imagemInimigoGrande;
 let imagemInimigoVoador;
+let imagemVida;
 let imagemGameOver;
 
 let somDoJogo;
@@ -119,8 +120,10 @@ const matrizInimigoVoador = [
 let inimigos = [];
 
 let jogo;
+let fita;
 
 let telaInicial;
 let botaoGerenciador;
+let vida;
 
 let cenaAtual = 'telaInicial';

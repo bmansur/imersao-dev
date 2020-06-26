@@ -11,7 +11,7 @@ class Personagem extends Animacao {
   }
 
   pula() {
-    if (this.pulos < 2) {
+    if(this.pulos < 2){
       this.velocidadeDoPulo = this.alturaDoPulo;
       this.pulos++;
     }
@@ -26,18 +26,31 @@ class Personagem extends Animacao {
       this.pulos = 0;
     }
   }
+  
+  ficarInvencivel() {
+    this.invencivel = true;
+    setTimeout(() => {
+      this.invencivel = false
+    }, 1000);
+  }
 
   estaColidindo(inimigo) {
+    if(this.invencivel){
+      return false;
+    }
+    
     const precisao = .7;
-
-    return collideCircleCircle(
-      this.x + this.largura / 2,
-      this.y + this.altura / 2,
-      (this.altura + this.largura) * precisao / 2,
-      inimigo.x + inimigo.largura / 2,
-      inimigo.y + inimigo.altura / 2,
-      (inimigo.altura + inimigo.largura) * precisao / 2
+    
+    const colidiu = collideCircleCircle(
+      this.x + this.largura/2, 
+      this.y + this.altura/2, 
+      (this.altura + this.largura)*precisao/2,
+      inimigo.x + inimigo.largura/2, 
+      inimigo.y + inimigo.altura/2, 
+      (inimigo.altura + inimigo.largura)*precisao/2
     );
+
+    return colidiu;
   }
 
 }
